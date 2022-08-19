@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const User = require("../modals/User");
+const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
 
@@ -34,7 +34,7 @@ router.post("/login", async (req, res) => {
     },process.env.jwt_sec,{expiresIn:'3d'})
 
     const {password, ...other}= user._doc;
-    
+    res.cookie('jwt',accesstoken)
     return res
       .status(200)
       .json({...other, accesstoken});
