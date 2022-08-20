@@ -19,8 +19,8 @@ const Product = () => {
     await axios
       .get(
         Filter.Components
-          ? `http://52.66.142.209:8000/api/product?category=${Filter.Components}`
-          : "http://52.66.142.209:8000/api/product"
+          ? `https://pc-pcarts.herokuapp.com/api/product?category=${Filter.Components}`
+          : "https://pc-pcarts.herokuapp.com/api/product"
       )
       .then((req) => {
         setProducts(req.data);

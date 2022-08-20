@@ -5,21 +5,24 @@ import { FaCreditCard } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { remove } from "../Redux/cartRedux";
 import axios from "axios";
+import {Navigate } from "react-router-dom";
 const Cart = () => {
   const [StripeToken, setStripeToken] = useState(null);
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
+  const user = useSelector((state) => state.user.currentUser);
   const KEY =
     "pk_test_51LYBUCSEW2U3ObXEYSCO4gsd1rCQ57V6YHbzzouS9oqHZa78WWxxxf6XH8Fg7yCDO2gWG41ct8WKSa6HsNoNtNxb00OVld3YBK";
 
   const onToken = (token) => {
     setStripeToken(token);
   };
+  
   useEffect(() => {
     const makeReq = async () => {
       try {
         const res = await axios.post(
-          "http://52.66.142.209:8000/api/checkout/payment",
+          "https://pc-pcarts.herokuapp.com/api/checkout/payment",
           {
             tokenId: StripeToken.id,
             amount: 2000,
@@ -167,13 +170,14 @@ const Cart = () => {
                       ₹ {cart.total}
                     </div>
                   </div>
+                  {user ?(
                   <StripeCheckout
                     name="PC Parts"
                     image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaV3NDKeRj7uzfdhdQuUgsetIxf4WYoZKM9ZD2ovc&s"
                     billingAddress
                     shippingAddress
                     description={`Your total is ${cart.total}`}
-                    currency="inr"
+                    currency="INR"
                     amount={cart.total * 100}
                     token={onToken}
                     stripeKey={KEY}
@@ -182,7 +186,7 @@ const Cart = () => {
                       <FaCreditCard className="text-2xl" />
                       <span className="ml-2 mt-5px">Procceed to checkout</span>
                     </button>
-                  </StripeCheckout>
+                  </StripeCheckout>):<Navigate to="/login" />}
                 </div>
               </div>
             </div>

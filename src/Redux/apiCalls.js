@@ -12,7 +12,7 @@ export const login = async (dispatch, user) => {
   dispatch(loginStart());
   try {
     const res = await axios.post(
-      "http://52.66.142.209:8000/api/auth/login",
+      "https://pc-pcarts.herokuapp.com/api/auth/login",
       user
     );
     dispatch(loginSuccess(res.data));
@@ -25,7 +25,7 @@ export const signup = async (dispatch, user) => {
   dispatch(signupStart());
   try {
     const res = await axios.post(
-      "http://52.66.142.209:8000/api/auth/register",
+      "https://pc-pcarts.herokuapp.com/api/auth/register",
       user
     );
     dispatch(signupSuccess(res.data));
