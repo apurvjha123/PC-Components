@@ -3,11 +3,16 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
 
+router.get('/', (req, res) => {
+  res.send('Hello World!')
+})
+
 router.post("/register", async (req, res) => {
   const newUser = new User({
     username: req.body.username,
     email: req.body.email,
     password: await bcrypt.hash(req.body.password, 10),
+    // password:req.body.password
   });
 
   try {
